@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>500</y>
-      <width>480</width>
+      <width>351</width>
       <height>71</height>
      </rect>
     </property>
@@ -56,6 +56,53 @@
      </property>
      <property name="text">
       <string>Learning</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>500</y>
+      <width>281</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Rangefinder</string>
+    </property>
+    <widget class="QLCDNumber" name="lcdNumber">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>64</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="lineWidth">
+      <number>1</number>
+     </property>
+     <property name="midLineWidth">
+      <number>0</number>
+     </property>
+     <property name="smallDecimalPoint">
+      <bool>true</bool>
+     </property>
+     <property name="digitCount">
+      <number>6</number>
+     </property>
+     <property name="segmentStyle">
+      <enum>QLCDNumber::Flat</enum>
+     </property>
+     <property name="value" stdset="0">
+      <double>187.969999999999999</double>
      </property>
     </widget>
    </widget>

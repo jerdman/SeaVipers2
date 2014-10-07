@@ -16,6 +16,7 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLCDNumber>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -32,6 +33,8 @@ public:
     QGroupBox *groupBox;
     QPushButton *initializeButton;
     QCheckBox *learningCheckBox;
+    QGroupBox *groupBox_2;
+    QLCDNumber *lcdNumber;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -45,7 +48,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(10, 500, 480, 71));
+        groupBox->setGeometry(QRect(10, 500, 351, 71));
         groupBox->setFlat(false);
         groupBox->setCheckable(false);
         initializeButton = new QPushButton(groupBox);
@@ -54,6 +57,20 @@ public:
         learningCheckBox = new QCheckBox(groupBox);
         learningCheckBox->setObjectName(QStringLiteral("learningCheckBox"));
         learningCheckBox->setGeometry(QRect(100, 20, 70, 17));
+        groupBox_2 = new QGroupBox(centralWidget);
+        groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
+        groupBox_2->setGeometry(QRect(380, 500, 281, 71));
+        lcdNumber = new QLCDNumber(groupBox_2);
+        lcdNumber->setObjectName(QStringLiteral("lcdNumber"));
+        lcdNumber->setGeometry(QRect(10, 20, 64, 23));
+        lcdNumber->setAutoFillBackground(false);
+        lcdNumber->setFrameShape(QFrame::Box);
+        lcdNumber->setLineWidth(1);
+        lcdNumber->setMidLineWidth(0);
+        lcdNumber->setSmallDecimalPoint(true);
+        lcdNumber->setDigitCount(6);
+        lcdNumber->setSegmentStyle(QLCDNumber::Flat);
+        lcdNumber->setProperty("value", QVariant(187.97));
         SeaVipers2Class->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(SeaVipers2Class);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -77,6 +94,7 @@ public:
         groupBox->setTitle(QApplication::translate("SeaVipers2Class", "Tracker", 0));
         initializeButton->setText(QApplication::translate("SeaVipers2Class", "Initialize", 0));
         learningCheckBox->setText(QApplication::translate("SeaVipers2Class", "Learning", 0));
+        groupBox_2->setTitle(QApplication::translate("SeaVipers2Class", "Rangefinder", 0));
     } // retranslateUi
 
 };

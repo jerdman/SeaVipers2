@@ -11,6 +11,7 @@
 #include <QPainter>
 #include <QtGui>
 #include <QDebug>
+#include <Rangefinder.h>
 
 
 
@@ -36,6 +37,10 @@ private:
 	QRect bb, img_area;
 	QPoint origin;
 	bool selecting;
+
+	QString filepath;
+
+	Rangefinder *ranger;
 
 public slots:
 	void handleOpenCamera(void);

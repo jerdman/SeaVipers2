@@ -7,12 +7,13 @@ SeaVipers2::SeaVipers2(QWidget *parent) : QMainWindow(parent){
 	ui.setupUi(this);
 	vidcap = cv::VideoCapture();
 	video_timer = QBasicTimer();
-	//tracker = tld::TLD();
 	tracking = false;
-	// TODO tld parameters
-	// TODO connect signals/slots
 	handleOpenCamera();
 	frame = 0;
+
+	ranger = new Rangefinder(this);
+	ranger->connectPort("COM7"); 
+	//connect(ranger, SIGNAL(distanceChanged()), ui.lcdNumber, SLOT(display()));
 
 	//connections
 	connect(ui.initializeButton, SIGNAL(clicked()), this, SLOT(handleStartTracker()));
@@ -31,7 +32,7 @@ void SeaVipers2::handleOpenCamera(void){
 	vidcap >> current_mat;
 	vidcap >> current_mat;
 	img_area = QRect(xOff, yOff, current_mat.cols, current_mat.rows);
-	video_timer.start(1000.0/9.0, this); // 9 Hz
+	video_timer.start(1000.0/9.0, this); // 9 Hz, 11 fps
 }
 
 void SeaVipers2::handleStartTracker(void){
@@ -68,7 +69,6 @@ void SeaVipers2::timerEvent(QTimerEvent *event){
 		frame++;
 		if(tracking){
 			tracker.processImage(current_mat);
-			//bb = QRect(tracker.currBB->x + xOff, tracker.currBB->y + yOff, tracker.currBB->width, tracker.currBB->height);
 			if(tracker.currBB){
 				bb.setLeft(tracker.currBB->x + xOff);
 				bb.setTop(tracker.currBB->y + yOff);
@@ -76,6 +76,7 @@ void SeaVipers2::timerEvent(QTimerEvent *event){
 				bb.setHeight(tracker.currBB->height);
 			}
 		}
+		cv::imwrite(QString("c:\\Users\\tiger\\Desktop\\test\\cap%1.jpg").arg(frame).toStdString().c_str(), current_mat);
 		update(); // flags ready for QPaintEvent
 	} else
 		QWidget::timerEvent(event);
@@ -104,6 +105,7 @@ void SeaVipers2::mouseReleaseEvent(QMouseEvent *event){
 	else
 		QWidget::mouseReleaseEvent(event);
 }
+
 void SeaVipers2::handleLearningBoxChecked(void){
 	if(ui.learningCheckBox->isChecked()){
 		tracker.learningEnabled = true;
