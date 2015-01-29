@@ -11,6 +11,14 @@ SeaVipers2::SeaVipers2(QWidget *parent) : QMainWindow(parent){
 	handleOpenCamera();
 	frame = 0;
 
+	//outputFile = new QFile("c:\\Users\\tiger\\Desktop\\test\\log.csv");
+	//outputFile->open(QIODevice::WriteOnly | QIODevice::Text);
+	//outputStream = new QTextStream(outputFile);
+
+	outputFile.setFileName("c:\\Users\\tiger\\Desktop\\test\\log.csv");
+	outputFile.open(QIODevice::WriteOnly | QIODevice::Text);
+	outputStream.setDevice(&outputFile);
+
 	ranger = new Rangefinder(this);
 	ranger->connectPort("COM7"); 
 	//connect(ranger, SIGNAL(distanceChanged()), ui.lcdNumber, SLOT(display()));
@@ -77,6 +85,13 @@ void SeaVipers2::timerEvent(QTimerEvent *event){
 			}
 		}
 		cv::imwrite(QString("c:\\Users\\tiger\\Desktop\\test\\cap%1.jpg").arg(frame).toStdString().c_str(), current_mat);
+		outputStream << frame << ',' << bb.x() << ',' << bb.y() << ',' << bb.width() << ',' << bb.height();
+		if(tracking)
+			outputStream << ",tracking,";
+		else
+			outputStream << ",not tracking,";
+		outputStream << QString::number(tracker.currConf) << ',' << tracker.valid;
+		outputStream << "\n";
 		update(); // flags ready for QPaintEvent
 	} else
 		QWidget::timerEvent(event);

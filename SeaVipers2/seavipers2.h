@@ -11,6 +11,8 @@
 #include <QPainter>
 #include <QtGui>
 #include <QDebug>
+#include <QFile>
+#include <QTextStream>
 #include <Rangefinder.h>
 
 
@@ -41,6 +43,9 @@ private:
 	QString filepath;
 
 	Rangefinder *ranger;
+
+	QFile outputFile;
+	QTextStream outputStream;
 
 public slots:
 	void handleOpenCamera(void);
