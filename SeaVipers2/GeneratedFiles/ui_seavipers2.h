@@ -35,6 +35,8 @@ public:
     QCheckBox *learningCheckBox;
     QGroupBox *groupBox_2;
     QLCDNumber *lcdNumber;
+    QGroupBox *groupBox_3;
+    QPushButton *ptuResetButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -71,6 +73,12 @@ public:
         lcdNumber->setDigitCount(6);
         lcdNumber->setSegmentStyle(QLCDNumber::Flat);
         lcdNumber->setProperty("value", QVariant(187.97));
+        groupBox_3 = new QGroupBox(centralWidget);
+        groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
+        groupBox_3->setGeometry(QRect(10, 580, 351, 51));
+        ptuResetButton = new QPushButton(groupBox_3);
+        ptuResetButton->setObjectName(QStringLiteral("ptuResetButton"));
+        ptuResetButton->setGeometry(QRect(10, 20, 75, 23));
         SeaVipers2Class->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(SeaVipers2Class);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -95,6 +103,8 @@ public:
         initializeButton->setText(QApplication::translate("SeaVipers2Class", "Initialize", 0));
         learningCheckBox->setText(QApplication::translate("SeaVipers2Class", "Learning", 0));
         groupBox_2->setTitle(QApplication::translate("SeaVipers2Class", "Rangefinder", 0));
+        groupBox_3->setTitle(QApplication::translate("SeaVipers2Class", "PTU", 0));
+        ptuResetButton->setText(QApplication::translate("SeaVipers2Class", "Reset", 0));
     } // retranslateUi
 
 };

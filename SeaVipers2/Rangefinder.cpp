@@ -4,6 +4,7 @@
 Rangefinder::Rangefinder(QObject *parent): QObject(parent){
 	port = new QSerialPort(this);
 	reporting = false;
+	distance = 0;
 }
 
 
@@ -60,4 +61,8 @@ void Rangefinder::stopReporting(void){
 	reporting = false;
 	if(port->isOpen())
 		port->write("O\r"); // stop continuous reporting
+}
+
+double Rangefinder::getDistance(void){
+	return this->distance;
 }

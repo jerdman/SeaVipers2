@@ -14,6 +14,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <Rangefinder.h>
+#include <PanTilt.h>
 
 
 
@@ -43,14 +44,23 @@ private:
 	QString filepath;
 
 	Rangefinder *ranger;
+	PanTilt *ptu;
 
 	QFile outputFile;
 	QTextStream outputStream;
+
+	QPoint imgCenter, bbCenter;
+
+	double dxpp, dypp;
+
+	double target_range;
+	double target_heading;
 
 public slots:
 	void handleOpenCamera(void);
 	void handleStartTracker(void);
 	void handleLearningBoxChecked(void);
+	void handleResetButtonClicked(void);
 
 protected:
 	void paintEvent(QPaintEvent *event);

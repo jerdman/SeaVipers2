@@ -4,6 +4,10 @@
 PanTilt::PanTilt(QObject *parent):QObject(parent)
 {
 	port = new QSerialPort(this);
+	pan = 0;
+	tilt = 0;
+	emit panChanged(pan);
+	emit tiltChanged(tilt);
 }
 
 
@@ -24,7 +28,7 @@ void PanTilt::connectPort(QString name){
 		port->setFlowControl(QSerialPort::NoFlowControl);
 
 		//setTerseFeedback();
-		
+		setImmediateMode();
 	}
 }
 
@@ -33,21 +37,21 @@ void PanTilt::handleReadyRead(void){
 	// good command response starts with '*'
 	// bad/error response starts with '!'
 
-	if(response.startsWith("PP")){
+	if(response.startsWith('*')){
 		// parse and update
 
 	} else if(response.startsWith('!')){
 		// do something with this message
 	} else {
-		// badly formatted response
-		// what do?
+		// this->sendReset();
 	}
 	
 }
 
 void PanTilt::sendCommand(QString command){
 	command.append(" ");
-	port->write(command.toStdString().c_str());
+	if(port->isOpen())
+		port->write(command.toStdString().c_str());
 }
 
 void PanTilt::setSlaveMode(void){
@@ -76,17 +80,53 @@ void PanTilt::setTerseFeedback(void){
 }
 
 void PanTilt::panAbsolute(int p){
-	this->sendCommand(QString("PP").append(QString::number(p)));
+	if(p > right)
+		pan = right;
+	else if(p < left)
+		pan = left;
+	else
+		pan = p;
+	emit panChanged(pan);
+	this->sendCommand(QString("PP").append(QString::number(pan)));
 }
 
 void PanTilt::tiltAbsolute(int t){
-	this->sendCommand(QString("TP").append(QString::number(t)));
+	if(t > up)
+		tilt = up;
+	else if(t < down)
+		tilt = down;
+	else
+		tilt = t;
+	emit tiltChanged(tilt);
+	this->sendCommand(QString("TP").append(QString::number(tilt)));
 }
 
 void PanTilt::panRelative(int p){
+	if(pan + p > right)
+		pan = right;
+	else if(pan + p < left)
+		pan = left;
+	else
+		pan += p;
+	emit panChanged(pan);
 	this->sendCommand(QString("PO").append(QString::number(p)));
 }
 
 void PanTilt::tiltRelative(int t){
+	if(tilt + t > up)
+		tilt = up;
+	else if(tilt + t < down)
+		tilt = down;
+	else 
+		tilt += down;
+	emit tiltChanged(tilt);
 	this->sendCommand(QString("TO").append(QString::number(t)));
+}
+
+int PanTilt::getPan(void){
+	return this->pan;
+}
+
+int PanTilt::getTilt(void){
+	return this->tilt;
 }

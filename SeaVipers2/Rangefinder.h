@@ -27,5 +27,8 @@ public:
 	void startReporting(void);
 	void stopReporting(void);
 	void checkStatus(void);
+
+	double getDistance(void);
+
 };
 

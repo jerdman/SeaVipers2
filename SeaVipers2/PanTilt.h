@@ -39,5 +39,8 @@ public:
 	void tiltAbsolute(int t);
 	void panRelative(int p);
 	void tiltRelative(int t);
+
+	int getPan(void);
+	int getTilt(void);
 };
 
